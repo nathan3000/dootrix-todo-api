@@ -1,16 +1,23 @@
-import { version } from '../../package.json';
-import { Router } from 'express';
-import todos from './todos';
+import { version } from '../../package.json'
+import { Router } from 'express'
+import applyJwtPassportStrategy from '../config/passport'
+import todos from './todos'
+import users from './users'
+import auth from './auth'
 
-export default ({ config, db }) => {
-	let api = Router();
+export default ({ config, db, passport }) => {
+	applyJwtPassportStrategy(passport)
+	
+	let api = Router()
 
-	// mount the todos resource
-	api.use('/todos', todos);
+	api.use('/auth', auth)
 
-	// expose some API metadata at the root
+	api.use('/todos', passport.authenticate('jwt', { session: false } ), todos)
+
+	api.use('/users', passport.authenticate('jwt', { session: false } ), users)
+	
 	api.get('/', (req, res) => {
-		res.json({ version });
+		res.json({ version })
 	});
 
 	return api;

@@ -2,13 +2,20 @@ import http from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import initializeDb from './db';
+import passport from 'passport'
+import jwt from 'jsonwebtoken'
+import initializeDb from './config/db';
 import middleware from './middleware';
 import api from './api';
-import config from './config.json';
+import config from './config/config.json';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 let app = express();
 app.server = http.createServer(app);
+
+app.use(passport.initialize())
 
 // 3rd party middleware
 app.use(cors({
@@ -19,6 +26,7 @@ app.use(bodyParser.json({
 	limit : config.bodyLimit
 }));
 
+
 // connect to db
 initializeDb( db => {
 
@@ -26,7 +34,7 @@ initializeDb( db => {
 	app.use(middleware({ config, db }));
 
 	// api router
-	app.use('/api', api({ config, db }));
+	app.use('/api', api({ config, db, passport }));
 
 	app.server.listen(process.env.PORT || config.port);
 

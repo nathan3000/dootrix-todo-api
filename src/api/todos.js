@@ -26,7 +26,7 @@ router.route('/')
 
 router.route('/:id')
 	.get((req, res) => {
-		Todo.findOne({ _id: req.params.id }, (err, todo) => {
+		Todo.findOne({ id: req.params.id }, (err, todo) => {
 			if (err) {
 				return res.send(err)
 			}
@@ -35,7 +35,7 @@ router.route('/:id')
 		})
 	})
 	.put((req, res) => {
-		Todo.findOne({ _id: req.params.id }, (err, todo) => {
+		Todo.findOne({ id: req.params.id }, (err, todo) => {
 			if (err) {
 				return res.send(err)
 			}
@@ -54,7 +54,7 @@ router.route('/:id')
 		})
 	})
 	.delete((req, res) => {
-		Todo.remove({ _id: req.params.id }, (err, todo) => {
+		Todo.remove({ id: req.params.id }, (err, todo) => {
 			if (err) {
 				return res.send(err)
 			}
