@@ -13,7 +13,7 @@ router.route('/')
 
             if(!user) {
                 console.log('Authentication failed. User not found.')
-                res.json({ success: false, message: 'Authentication failed.' })
+                res.status(401).json({ success: false, message: 'Authentication failed.' })
             } else {
                 user.comparePassword(req.body.password, (err, isMatch) => {
                     if (err) {
@@ -22,7 +22,7 @@ router.route('/')
 
                     if (!isMatch) {
                         console.log('Authentication failed. Wrong password.')
-                        res.json({ success: false, message: 'Authentication failed.' })
+                        res.status(401).json({ success: false, message: 'Authentication failed.' })
                     } else {
                         const payload = { id: user.id }
                         console.log(payload)
