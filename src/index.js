@@ -19,6 +19,7 @@ app.use(passport.initialize())
 
 // 3rd party middleware
 app.use(cors({
+	origin: 'https://serene-scrubland-16985.herokuapp.com',
 	exposedHeaders: config.corsHeaders
 }));
 
