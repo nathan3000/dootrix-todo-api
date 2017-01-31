@@ -39,6 +39,15 @@ To install dependencies.
 
 ###```npm install```
 
+## Configuration
+
+To run the app locally you'll need to set two environment variables:
+Creating a *.env* file with the following should do the trick (dotenv loads them automagically)
+```
+DATABASE_URL=[mongo url]
+SECRET=[your secret]
+```
+
 ## Development mode
 
 ### `npm run dev`
